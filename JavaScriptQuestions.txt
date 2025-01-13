@@ -1,0 +1,171 @@
+1. Types of variables in JS
+- String, Number, Bool, Undefined, Null, Symbol, BigInt
+
+
+2.Difference between let, var, const
+- Const variables are constant and don't change after you assign them
+- var is available in the function in which it's declared
+Ex: function varScope() {
+    var x = 1;
+    if(true) {
+        let x = 2;
+        console.log(x); <-- prints 2
+    }
+    console.log(x); <-- prints 2
+}
+
+-let is only available inside the block it's defined in
+Ex: function letScope() {
+    let x = 1;
+    if(true) {
+        let x = 2;
+        console.log(x); <-- prints 2
+    }
+
+    console.log(x); <-- prints 1
+}
+
+
+3. What is hoisting and why does it exist?
+- Hoisting is default JavaScript behavior that moves declarations to the top
+- Allows you to use variables before you declare them
+
+
+4. Difference between Class and Object
+- Classes are blueprints. They couple data and the methods that use that data for encapsulation
+- Objects are instances of a class
+
+
+5. What is "this" keyword and when do we use it
+- Refers to object executing the current piece of code
+
+
+6. Difference between normal function & arrow function
+-1. Normal functions have "arguments" object you can access in the function (console.log(arguments))
+-Ex: PrintArguments("Hello", 400, false){
+    console.log(arguments)
+}
+- '0': 'hello',
+- '1': 400,
+- '2': false
+
+-2. Arrow functions don't create their own "this" binding
+--Normal functions have "this" variable that references the object that calls them
+
+-3. Arrow functions can't be used as contructors
+--Normal functions can create constructors that instantiate an object from a class
+
+4. Arrow functions can't be declared
+
+5. Arrow functions can't be accessed before initialization
+-All functions are hoisted in JS, but only declared functions can be accessed before initialization
+
+
+7. What is a promise?
+-A promise is an object that will produce a value some time in the future
+-If successful, produces "resolved"
+-If fail, can use optional "reject"
+Ex: const promise = new Promise((resolve, reject) => {
+    const num = Math.random()
+    if (num > 0.5) {
+        resolve("Promise fulfilled!");
+    } else {
+        reject("Promise failed!");
+    }
+})
+-Use .then() to add callbacks
+Ex: function handleResolve(value) {
+    console.log(value)
+}
+
+function handleReject(reason) {
+    console.error(reason)
+}
+
+promise.then(handleResolve, handleReject)
+
+-OR-
+-Can also create immediately-resolved or rejected promises, then attach callback with then
+
+Promise.resolve("Sucessful").then((result) => console.log(result))
+Promise.reject("Not Successful").then((result) => console.log(result))
+
+Promise.reject(new Error()).catch((reason) => console.error(reason))
+
+
+8. What does it mean for something to be mutable / immutable? Which variables are mutable & which immutable?
+-Mutable data types can be changed after they're created & stored in memory
+
+-Primitive types (Saved & accessed by variable's value, not reference to another object) are immutable
+-Say you create person and person2; then set person2 = person; then change a property in person, only person's property changes
+-This is because JS creates a new space in memory and allocates same value to person2
+--undefined, null, boolean, number, string, symbol
+
+-Reference types (Stored as reference in memory, not independent values assigned to variables) are mutable
+-Say you create person and person2; then set person2 = person; then change a property in person, both person and person2's property will change
+--This is because both variables reference the same object in memory
+--objects, arrays, functions
+
+9. What is closure? Give an example.
+-Combination of a function bundled together with references to its surrounding state
+--In other words, gives inner function access to outer function's scope
+-Most of front-end is event-based so many situations for this
+--Define behavior, attach behavior to event triggered by user (onClick), attached code is a callback function
+Ex: Function that makes other functions
+- function makeSizer(size) {
+    return function (offset) {
+        document.body.style.fontSize = `${size + offset}px`;
+    }
+}
+
+const size12 = makeSizer(12)
+const size14 = makeSizer(14)
+
+-size12 and size14 both form closures. They have same function definition but store different lexical environments.
+--Size is 12 in size12 and 14 in size14
+
+document.getElementById("size-12").onclick = size12
+document.getElementById("size-14").onclick = size14
+
+<button id="size-12">12</button>
+<button id="size-14">14</button>
+
+
+10. Why are block-scoped (rather function-scoped) variables not available after we exit a function
+-Because they are local to the function
+--If they weren't, they would be outside of the function and therefore global
+
+
+11. Front-end caching. What is it? Difference between local storage & session storage?
+-Caching is storing reusable data in high-speed storage layer for faster future requests
+-Session storage: data is automatically deleted when tab / window is closed
+-Local storage: data has no default expiration date; Can only be deleted manually
+
+
+12. What are cookies and what do we use them for?
+-Cookies are short text files that store data on a computer (client-side)
+-Typically used to track preferences
+-When browser request web page from server, cookies on page are added to request
+--This way, server gets information needed to "remember" user info
+
+
+13. What is HTTP? What is REST?
+-HyperText Transfer Protocol (HTTP) is used to load web pages via hypertext links
+-HTTP is an application layer protocol designed to transfer information between devices on a network
+-HTTP runs on top of other network protocol layers
+
+-Representational State Transfer (REST) is an architectural style that provides standards between computer systems
+-REST-compliant or "RESTful" systems feature separate client & server for modularity
+-Clients send requests to get / change resources & servers send responses
+-Request is typically:
+--HTTP verb (GET, POST, DELETE, etc.)
+--Header (information about the request)
+--Message body with data (Optional)
+
+
+14. Which HTTP verbs are there and when are they used?
+-GET ( Read / Retrieve one or multiple resources )
+-POST ( Create a resource )
+-PUT ( Modifies all of a resource's information & creates new one if not available )
+-PATCH ( Modifies a resource without sending the entire body in the request )
+-DELETE ( Delete a resource )

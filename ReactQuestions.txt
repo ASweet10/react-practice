@@ -1,0 +1,56 @@
+1. Explain lifecycle of react component (When mounted, rerendered, unmounted)
+-Component mounts when added to screen
+-Component re-renders when it receives new props or state
+--Usually in response to an interaction
+-Component unmounts when removed from the screen
+
+-Rendering: Any time a function component gets called which returns set of instructions to create DOM
+-Mounting: When React renders component for first time and builds initial DOM from these instructions
+
+
+2. Everything about useEffect
+-React hook that manages side-effects in functional components
+-Side-effects are calculations that don't target the output value
+--Examples include fetch requests, direct DOM manipulation, timer functions like setTimeout(), etc.
+-UseEffect runs side-effects independently of rendering
+-Accepts 2 arguments: useEffect(callback, [dependency array])
+--Dependency array is optional
+--Omitted: Side-effect runs after every render
+--Included but empty: Side-effect runs once after first render
+--Included: Only executes if given dependencies changed between renders
+Ex: useEffect(() => {
+    document.title = `Greetings ${name}`
+}, [name])
+
+
+3. How do class components differ from funcitonal components? (not syntax, related to state management)
+-Class components: state is initialized with constructor:
+Ex: class Hello extends React.Component {
+
+    constructor() {
+        this.state = {
+            endOfMessage: '!'
+        }
+    }
+
+    render() {
+        return <h1>Hello, { this.props.name } { this.state.endOfMessage }</h1>
+    }
+}
+-Don't modify state directly, i.e.   this.state.endOfMessage = '?' <--- Won't trigger re-render
+-Do use setState, i.e.   this.setState({ endOfMessage: '?' })
+--If current state depends on previous, take previous into account:
+Ex: this.setState(function(prevState, prevProps) {
+    return {
+        counter: prevState.counter + prevProps.increment
+    }
+})
+
+-Functional components: Uses useState. Create array with value & function to update said value
+--const [ count, setCount ] = useState(0)
+
+
+4. What is a hook? Give an example
+-A special function that lets you "hook into" React features
+-useState is a hook that lets you add React state to function components
+
