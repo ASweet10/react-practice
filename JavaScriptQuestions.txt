@@ -1,3 +1,4 @@
+From: https://youtu.be/xo1sW5HD7os
 1. Types of variables in JS
 - String, Number, Bool, Undefined, Null, Symbol, BigInt
 
